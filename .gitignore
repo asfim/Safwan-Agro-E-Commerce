@@ -1,0 +1,19 @@
+# WordPress Environment & Sensitive Credentials
+wp-config.php
+
+# Server Logs & Backups
+*.log
+error_log
+wp-admin/error_log
+.htaccess.bk
+
+# Cache & Temporary Directories
+wp-content/cache/
+wp-content/updraft/
+wp-content/upgrade/
+wp-content/litespeed/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+*.tmp

@@ -1,0 +1,21 @@
+
+.elementor-kit-6 {
+  --e-global-color-primary: #b91c1c;
+  --e-global-color-secondary: #1e293b;
+  --e-global-color-text: #334155;
+  --e-global-color-accent: #15803d;
+  --e-global-color-safwan_cream: #fcfbf7;
+  --e-global-color-safwan_whatsapp: #25d366;
+  --e-global-typography-primary-font-family: 'Noto Sans Bengali';
+  --e-global-typography-primary-font-weight: 600;
+  --e-global-typography-primary-font-size: 15px;
+  --e-global-typography-secondary-font-family: 'Roboto Slab';
+  --e-global-typography-secondary-font-weight: 600;
+  --e-global-typography-secondary-font-size: 32px;
+  --e-global-typography-text-font-family: 'Roboto';
+  --e-global-typography-text-font-weight: 400;
+  --e-global-typography-text-font-size: 15px;
+  --e-global-typography-accent-font-family: 'Roboto';
+  --e-global-typography-accent-font-weight: 400;
+  --e-global-typography-accent-font-size: 15px;
+}
