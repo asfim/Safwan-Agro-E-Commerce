@@ -33,7 +33,7 @@ function safwan_child_enqueue_styles() {
     );
     
     // Enqueue Child Theme Style with cache-busting version
-    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.0.6' );
+    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.0.8' );
 }
 add_action( 'wp_enqueue_scripts', 'safwan_child_enqueue_styles', 15 );
 
