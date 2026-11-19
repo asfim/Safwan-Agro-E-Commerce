@@ -528,8 +528,12 @@ button.safwan-slider-arrow:hover svg,
     width: 100% !important;
 }
 
-.safwan-search-container .hfe-search-form__container,
-.elementor-element-sng_col_search .hfe-search-form__container {
+.safwan-search-form {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.safwan-search-box {
     border: 2px solid #e2e8f0 !important;
     border-radius: 50px !important;
     background: #f8fafc !important;
@@ -539,17 +543,16 @@ button.safwan-slider-arrow:hover svg,
     display: flex !important;
     align-items: center !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) inset !important;
+    width: 100% !important;
 }
 
-.safwan-search-container .hfe-search-form__container:focus-within,
-.elementor-element-sng_col_search .hfe-search-form__container:focus-within {
+.safwan-search-box:focus-within {
     border-color: #166534 !important;
     background: #ffffff !important;
     box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.12) !important;
 }
 
-.safwan-search-container .hfe-search-form__input,
-.elementor-element-sng_col_search .hfe-search-form__input {
+.safwan-search-input {
     border: none !important;
     background: transparent !important;
     padding: 0 20px !important;
@@ -559,41 +562,44 @@ button.safwan-slider-arrow:hover svg,
     height: 100% !important;
     width: 100% !important;
     outline: none !important;
+    box-shadow: none !important;
 }
 
-.safwan-search-container .hfe-search-form__input::placeholder,
-.elementor-element-sng_col_search .hfe-search-form__input::placeholder {
+.safwan-search-input::placeholder {
     color: #94a3b8 !important;
     font-weight: 400 !important;
 }
 
-.safwan-search-container .hfe-search-submit,
-.elementor-element-sng_col_search .hfe-search-submit {
+.safwan-search-btn {
     all: unset !important;
     background: #166534 !important;
     color: #ffffff !important;
     padding: 0 22px !important;
     height: 100% !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+    gap: 7px !important;
     cursor: pointer !important;
-    transition: background 0.2s ease !important;
+    transition: background 0.2s ease, transform 0.1s ease !important;
     border-radius: 0 50px 50px 0 !important;
+    font-family: 'Noto Sans Bengali', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
 }
 
-.safwan-search-container .hfe-search-submit:hover,
-.elementor-element-sng_col_search .hfe-search-submit:hover {
+.safwan-search-btn:hover {
     background: #14532d !important;
+    color: #ffffff !important;
 }
 
-.safwan-search-container .hfe-search-submit svg,
-.safwan-search-container .hfe-search-submit i,
-.elementor-element-sng_col_search .hfe-search-submit svg,
-.elementor-element-sng_col_search .hfe-search-submit i {
-    color: #ffffff !important;
-    fill: #ffffff !important;
-    font-size: 15px !important;
+.safwan-search-svg {
+    stroke: #ffffff !important;
+    display: block !important;
+    width: 17px !important;
+    height: 17px !important;
 }
 
 /* Header Actions (Hotline, Account, Cart) */
@@ -652,15 +658,15 @@ button.safwan-slider-arrow:hover svg,
     font-family: 'Inter', sans-serif !important;
 }
 
-/* Account Link */
+/* Account Link with SVG Icon */
 .safwan-header-account {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 7px !important;
+    gap: 8px !important;
     padding: 8px 16px !important;
     border: 1.5px solid #e2e8f0 !important;
     border-radius: 50px !important;
-    color: #334155 !important;
+    color: #1e293b !important;
     text-decoration: none !important;
     font-family: 'Noto Sans Bengali', sans-serif !important;
     font-size: 13.5px !important;
@@ -675,58 +681,124 @@ button.safwan-slider-arrow:hover svg,
     background: #f0fdf4 !important;
 }
 
-/* WooCommerce Cart Widget */
-.safwan-header-actions .elementor-widget-hfe-cart .elementor-button,
-.elementor-widget-hfe-cart .hfe-menu-cart__toggle .elementor-button {
-    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 50px !important;
-    padding: 8px 18px !important;
+.safwan-account-svg {
+    stroke: currentColor !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: 19px !important;
+    height: 19px !important;
+}
+
+/* Real-time WooCommerce Cart Button with SVG Icon & Counter */
+.safwan-header-cart-btn {
     display: inline-flex !important;
     align-items: center !important;
     gap: 10px !important;
+    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important;
+    color: #ffffff !important;
+    padding: 8px 18px !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
     box-shadow: 0 4px 14px rgba(185, 28, 28, 0.25) !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    text-decoration: none !important;
     cursor: pointer !important;
 }
 
-.safwan-header-actions .elementor-widget-hfe-cart .elementor-button:hover,
-.elementor-widget-hfe-cart .hfe-menu-cart__toggle .elementor-button:hover {
+.safwan-header-cart-btn:hover {
     background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%) !important;
+    color: #ffffff !important;
     transform: translateY(-1px) !important;
     box-shadow: 0 6px 18px rgba(185, 28, 28, 0.35) !important;
 }
 
-.safwan-header-actions .elementor-widget-hfe-cart .elementor-button-icon,
-.elementor-widget-hfe-cart .elementor-button-icon {
+.safwan-cart-icon-wrap {
     position: relative !important;
-    color: #ffffff !important;
-    font-size: 17px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
 }
 
-.safwan-header-actions .elementor-widget-hfe-cart .elementor-button-icon[data-counter]::before,
-.elementor-widget-hfe-cart .elementor-button-icon[data-counter]::before {
+.safwan-cart-svg {
+    stroke: #ffffff !important;
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.safwan-cart-count {
+    position: absolute !important;
+    top: -8px !important;
+    right: -10px !important;
     background: #ffffff !important;
     color: #b91c1c !important;
     font-weight: 800 !important;
     font-size: 11px !important;
-    width: 20px !important;
-    height: 20px !important;
-    line-height: 20px !important;
+    width: 19px !important;
+    height: 19px !important;
+    line-height: 19px !important;
+    text-align: center !important;
     border-radius: 50% !important;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
-    top: -9px !important;
-    right: -12px !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
-.safwan-header-actions .elementor-widget-hfe-cart .hfe-subtotal,
-.elementor-widget-hfe-cart .hfe-subtotal {
+.safwan-cart-total {
     color: #ffffff !important;
     font-family: 'Noto Sans Bengali', sans-serif !important;
     font-size: 13.5px !important;
     font-weight: 700 !important;
+}
+
+/* Mobile Cart Button */
+.safwan-mobile-cart-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: #b91c1c !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    position: relative !important;
+    box-shadow: 0 3px 10px rgba(185, 28, 28, 0.25) !important;
+}
+
+.safwan-mobile-cart-btn .safwan-cart-svg {
+    stroke: #ffffff !important;
+    width: 21px !important;
+    height: 21px !important;
+}
+
+.safwan-mobile-cart-btn .safwan-cart-count {
+    position: absolute !important;
+    top: -4px !important;
+    right: -4px !important;
+    background: #ffffff !important;
+    color: #b91c1c !important;
+    font-weight: 800 !important;
+    font-size: 10.5px !important;
+    width: 18px !important;
+    height: 18px !important;
+    line-height: 18px !important;
+    text-align: center !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.safwan-mobile-search-form .safwan-search-box {
+    height: 40px !important;
+}
+
+.safwan-mobile-search-form .safwan-search-input {
+    font-size: 13px !important;
+    padding: 0 16px !important;
+}
+
+.safwan-mobile-search-form .safwan-search-btn {
+    padding: 0 16px !important;
 }
 
 /* 3. Navigation Bar (Row 2 - Menu Section - Deep Forest Agro Green) */

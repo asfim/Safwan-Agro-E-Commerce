@@ -33,7 +33,7 @@ function safwan_child_enqueue_styles() {
     );
     
     // Enqueue Child Theme Style with cache-busting version
-    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.0.8' );
+    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.0.9' );
 }
 add_action( 'wp_enqueue_scripts', 'safwan_child_enqueue_styles', 15 );
 
@@ -155,3 +155,50 @@ function safwan_add_header_editor_admin_bar( $admin_bar ) {
     }
 }
 add_action( 'admin_bar_menu', 'safwan_add_header_editor_admin_bar', 999 );
+
+/**
+ * Render Header Cart Button with Real-time Count & Subtotal
+ */
+function safwan_render_cart_button_html( $is_mobile = false ) {
+    $cart_count = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+    $cart_total = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_total() : '০.০০ ৳';
+    $cart_url   = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
+    
+    if ( $is_mobile ) {
+        return '<a href="' . esc_url( $cart_url ) . '" class="safwan-mobile-cart-btn" title="শপিং কার্ট">'
+            . '<span class="safwan-cart-icon-wrap">'
+            . '<svg class="safwan-cart-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>'
+            . '<span class="safwan-cart-count">' . esc_html( $cart_count ) . '</span>'
+            . '</span>'
+            . '</a>';
+    }
+
+    return '<a href="' . esc_url( $cart_url ) . '" class="safwan-header-cart-btn" title="শপিং কার্ট দেখুন">'
+        . '<span class="safwan-cart-icon-wrap">'
+        . '<svg class="safwan-cart-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>'
+        . '<span class="safwan-cart-count">' . esc_html( $cart_count ) . '</span>'
+        . '</span>'
+        . '<span class="safwan-cart-total">' . $cart_total . '</span>'
+        . '</a>';
+}
+
+function safwan_cart_button_shortcode() {
+    return safwan_render_cart_button_html( false );
+}
+add_shortcode( 'safwan_cart_button', 'safwan_cart_button_shortcode' );
+
+function safwan_cart_button_mobile_shortcode() {
+    return safwan_render_cart_button_html( true );
+}
+add_shortcode( 'safwan_cart_button_mobile', 'safwan_cart_button_mobile_shortcode' );
+
+/**
+ * Update Cart Button via WooCommerce AJAX
+ */
+function safwan_add_cart_fragments( $fragments ) {
+    $fragments['a.safwan-header-cart-btn'] = safwan_render_cart_button_html( false );
+    $fragments['a.safwan-mobile-cart-btn'] = safwan_render_cart_button_html( true );
+    return $fragments;
+}
+add_filter( 'woocommerce_add_to_cart_fragments', 'safwan_add_cart_fragments' );
+
