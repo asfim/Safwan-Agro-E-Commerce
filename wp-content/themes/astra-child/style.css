@@ -378,15 +378,104 @@ button.safwan-slider-arrow:hover svg,
    SAFWAN AGRO — MODERN E-COMMERCE HEADER & MENU (V2)
    ======================================================== */
 
-/* Sticky Header Container */
-#masthead,
-.elementor-32 {
-    background: #ffffff !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 9999 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+/* Sticky Header & Navbar Behavior:
+   When scrolling down, Top Announcement Bar and Main Header hide/collapse smoothly,
+   and ONLY the Navigation Menu Bar stays sticky at the top! */
+
+@media (min-width: 922px) {
+    #masthead,
+    .elementor-32 {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 9999 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        transition: none !important;
+    }
+
+    .admin-bar #masthead,
+    .admin-bar .elementor-32 {
+        top: 32px !important;
+    }
+
+    /* Top Announcement Bar & Main Header smooth hide/collapse */
+    .safwan-topbar,
+    .elementor-element-sng_topbar,
+    .safwan-main-header,
+    .elementor-element-sng_main_header {
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.25s ease,
+                    padding 0.3s ease,
+                    margin 0.3s ease,
+                    visibility 0.35s ease !important;
+        overflow: hidden !important;
+    }
+
+    .safwan-topbar,
+    .elementor-element-sng_topbar {
+        max-height: 50px;
+    }
+
+    .safwan-main-header,
+    .elementor-element-sng_main_header {
+        max-height: 120px;
+    }
+
+    /* WHEN SCROLLED: Hide topbar and main header COMPLETELY! */
+    body.safwan-scrolled .safwan-topbar,
+    body.safwan-scrolled .elementor-element-sng_topbar,
+    #masthead.safwan-scrolled .safwan-topbar,
+    #masthead.safwan-scrolled .elementor-element-sng_topbar,
+    body.safwan-scrolled .safwan-main-header,
+    body.safwan-scrolled .elementor-element-sng_main_header,
+    #masthead.safwan-scrolled .safwan-main-header,
+    #masthead.safwan-scrolled .elementor-element-sng_main_header {
+        max-height: 0 !important;
+        min-height: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        border: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    /* ONLY Navigation Menu Bar remains sticky, with elevated shadow */
+    .safwan-navbar-wrapper,
+    .elementor-element-sng_navbar {
+        position: relative !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        box-shadow: 0 4px 14px rgba(22, 101, 52, 0.18) !important;
+        transition: box-shadow 0.3s ease !important;
+    }
+
+    body.safwan-scrolled .safwan-navbar-wrapper,
+    #masthead.safwan-scrolled .safwan-navbar-wrapper {
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28) !important;
+    }
+}
+
+/* On mobile view, keep mobile header sticky at top */
+@media screen and (max-width: 921px) {
+    #masthead,
+    .elementor-32 {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 9999 !important;
+        background: #ffffff !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .admin-bar #masthead,
+    .admin-bar .elementor-32 {
+        top: 46px !important;
+    }
 }
 
 /* 1. Top Announcement Bar */
@@ -1531,4 +1620,671 @@ body.safwan-cart-drawer-active {
 
 .safwan-contact-form button:hover {
     background: #991b1b !important;
+}
+
+
+/* ========================================================
+   MASTER FULL-SITE RESPONSIVE SYSTEM (ALL PAGES & DEVICES)
+   Safwan Nature-Gro: Desktop, Tablet (1024px), Mobile (768px), Small (480px)
+   ======================================================== */
+
+/* 1. Global Viewport & Container Constraints */
+html, body {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box !important;
+}
+
+img, svg, video, iframe {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.ast-container,
+.elementor-container,
+.site-content {
+    max-width: 100% !important;
+}
+
+/* ========================================================
+   2. TABLET RESPONSIVE RULES (768px to 1024px)
+   ======================================================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Header Container */
+    .safwan-topbar,
+    .elementor-element-sng_topbar {
+        padding: 6px 16px !important;
+        font-size: 11.5px !important;
+    }
+    
+    .safwan-main-header,
+    .elementor-element-sng_main_header {
+        padding: 10px 16px !important;
+        gap: 12px !important;
+    }
+
+    .safwan-brand-img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .safwan-brand-title {
+        font-size: 18px !important;
+    }
+
+    .safwan-search-container,
+    .elementor-element-sng_col_search {
+        max-width: 340px !important;
+        flex: 1 1 auto !important;
+    }
+
+    .safwan-header-actions {
+        gap: 10px !important;
+    }
+
+    .safwan-hotline-meta {
+        display: none !important;
+    }
+
+    /* Tablet Navbar: Smooth Horizontal Scrollable Menu */
+    .safwan-navbar-wrapper,
+    .elementor-element-sng_navbar {
+        padding: 0 16px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+
+    .safwan-navbar-wrapper::-webkit-scrollbar,
+    .elementor-element-sng_navbar::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .safwan-navbar-wrapper .hfe-nav-menu,
+    .elementor-element-sng_navbar .hfe-nav-menu {
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+    }
+
+    .safwan-navbar-wrapper .hfe-nav-menu > li > a.hfe-menu-item,
+    .elementor-element-sng_navbar .hfe-nav-menu > li > a.hfe-menu-item {
+        padding: 11px 12px !important;
+        font-size: 13.5px !important;
+        white-space: nowrap !important;
+    }
+
+    .safwan-nav-cat-pill {
+        padding: 10px 14px !important;
+        font-size: 13px !important;
+        white-space: nowrap !important;
+    }
+
+    .safwan-nav-deal-pill {
+        padding: 6px 14px !important;
+        font-size: 12.5px !important;
+        white-space: nowrap !important;
+    }
+
+    /* WooCommerce Shop Archive on Tablet: 3 Products Per Row */
+    .woocommerce ul.products,
+    .woocommerce-page ul.products {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .woocommerce ul.products li.product,
+    .woocommerce-page ul.products li.product {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    /* Footer on Tablet: 2 Columns Grid */
+    .safwan-footer-grid,
+    #sec_footer_main .elementor-container {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 24px !important;
+    }
+}
+
+/* ========================================================
+   3. MOBILE RESPONSIVE RULES (max-width: 767px)
+   ======================================================== */
+@media (max-width: 767px) {
+
+    /* --- MOBILE HEADER & NAVIGATION --- */
+    .safwan-mobile-header,
+    .elementor-element-sng_mobile_header {
+        display: flex !important;
+        flex-direction: column !important;
+        background: #ffffff !important;
+        padding: 8px 12px 10px !important;
+        border-bottom: 2px solid #166534 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+        width: 100% !important;
+    }
+
+    .elementor-element-sng_m_row1 {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        margin-bottom: 8px !important;
+    }
+
+    .safwan-mobile-brand {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        text-decoration: none !important;
+    }
+
+    .safwan-mobile-brand img {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        border: 1.5px solid #166534 !important;
+    }
+
+    .safwan-mobile-title {
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 17px !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+    }
+
+    .elementor-element-sng_m_row2 {
+        width: 100% !important;
+    }
+
+    .safwan-mobile-search-form {
+        width: 100% !important;
+    }
+
+    .safwan-mobile-search-form .safwan-search-box {
+        height: 40px !important;
+        border-radius: 50px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+        display: flex !important;
+        align-items: center !important;
+        overflow: hidden !important;
+    }
+
+    .safwan-mobile-search-form .safwan-search-input {
+        height: 38px !important;
+        font-size: 13px !important;
+        padding: 0 14px !important;
+        border: none !important;
+        outline: none !important;
+        background: transparent !important;
+        flex: 1 !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+    }
+
+    .safwan-mobile-search-form .safwan-search-btn {
+        background: #166534 !important;
+        color: #ffffff !important;
+        border: none !important;
+        height: 40px !important;
+        padding: 0 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+    }
+
+    /* Mobile Menu Dropdown Card */
+    .safwan-mobile-header .hfe-nav-menu__layout-horizontal,
+    .safwan-mobile-header .hfe-dropdown,
+    .safwan-mobile-header ul.hfe-nav-menu {
+        background: #ffffff !important;
+        border-radius: 12px !important;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+        border: 1px solid #e2e8f0 !important;
+        margin-top: 10px !important;
+        padding: 8px 0 !important;
+        list-style: none !important;
+        width: 100% !important;
+    }
+
+    .safwan-mobile-header ul.hfe-nav-menu li a {
+        display: flex !important;
+        align-items: center !important;
+        padding: 12px 18px !important;
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+        transition: background 0.15s ease !important;
+    }
+
+    .safwan-mobile-header ul.hfe-nav-menu li:last-child a {
+        border-bottom: none !important;
+    }
+
+    .safwan-mobile-header ul.hfe-nav-menu li a:hover,
+    .safwan-mobile-header ul.hfe-nav-menu li.current-menu-item a {
+        background: #f0fdf4 !important;
+        color: #166534 !important;
+        font-weight: 700 !important;
+    }
+
+    /* --- HOMEPAGE HERO BANNER --- */
+    .elementor-element-913c3f9,
+    .elementor-element-57b1de4,
+    .elementor-widget-image-carousel {
+        width: 100% !important;
+    }
+
+    .elementor-widget-image-carousel .swiper-container,
+    .elementor-widget-image-carousel .elementor-image-carousel {
+        border-radius: 10px !important;
+        overflow: hidden !important;
+    }
+
+    .elementor-widget-image-carousel .elementor-swiper-button {
+        width: 32px !important;
+        min-width: 32px !important;
+        max-width: 32px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+    }
+
+    .elementor-widget-image-carousel .elementor-swiper-button svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .elementor-widget-image-carousel .elementor-swiper-button-prev {
+        left: 8px !important;
+    }
+
+    .elementor-widget-image-carousel .elementor-swiper-button-next {
+        right: 8px !important;
+    }
+
+    /* --- CATEGORY SECTION ON MOBILE --- */
+    #sec_categories .elementor-container,
+    .safwan-categories-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 10px !important;
+        padding: 10px 0 !important;
+    }
+
+    @media (max-width: 460px) {
+        #sec_categories .elementor-container,
+        .safwan-categories-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 8px !important;
+        }
+    }
+
+    /* --- WOOCOMMERCE CATALOG / SHOP PAGE (2 COLUMNS ON MOBILE) --- */
+    .woocommerce ul.products,
+    .woocommerce-page ul.products {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .woocommerce ul.products li.product,
+    .woocommerce-page ul.products li.product {
+        width: 100% !important;
+        margin: 0 0 10px 0 !important;
+        padding: 10px !important;
+        border: 1px solid #f1f5f9 !important;
+        border-radius: 12px !important;
+        background: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+    }
+
+    .woocommerce ul.products li.product .woocommerce-loop-product__title {
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 13.5px !important;
+        font-weight: 700 !important;
+        line-height: 1.35 !important;
+        margin: 6px 0 !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        min-height: 36px !important;
+    }
+
+    .woocommerce ul.products li.product .price {
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 14.5px !important;
+        font-weight: 700 !important;
+        color: #b91c1c !important;
+        margin-bottom: 8px !important;
+    }
+
+    .woocommerce ul.products li.product .button {
+        width: 100% !important;
+        padding: 8px 10px !important;
+        font-size: 12.5px !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-weight: 700 !important;
+        border-radius: 6px !important;
+        text-align: center !important;
+        background: #166534 !important;
+        color: #ffffff !important;
+        margin: 0 !important;
+    }
+
+    .woocommerce-ordering,
+    .woocommerce-result-count {
+        float: none !important;
+        width: 100% !important;
+        margin-bottom: 12px !important;
+        text-align: left !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 13px !important;
+    }
+
+    .woocommerce-ordering select {
+        width: 100% !important;
+        height: 42px !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 13.5px !important;
+        padding: 0 12px !important;
+    }
+
+    /* --- SINGLE PRODUCT PAGE ON MOBILE --- */
+    .woocommerce div.product .woocommerce-product-gallery,
+    .woocommerce-page div.product .woocommerce-product-gallery {
+        width: 100% !important;
+        float: none !important;
+        margin-bottom: 20px !important;
+    }
+
+    .woocommerce div.product .summary,
+    .woocommerce-page div.product .summary {
+        width: 100% !important;
+        float: none !important;
+        padding: 0 4px !important;
+    }
+
+    .woocommerce div.product .product_title {
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 22px !important;
+        font-weight: 800 !important;
+        line-height: 1.3 !important;
+    }
+
+    .woocommerce div.product p.price {
+        font-size: 20px !important;
+        font-weight: 800 !important;
+        color: #b91c1c !important;
+    }
+
+    .woocommerce div.product form.cart {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+        align-items: center !important;
+    }
+
+    .woocommerce div.product form.cart .quantity {
+        margin: 0 !important;
+    }
+
+    .woocommerce div.product form.cart .quantity .qty {
+        height: 46px !important;
+        width: 70px !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+    }
+
+    .woocommerce div.product form.cart .single_add_to_cart_button {
+        flex: 1 !important;
+        height: 46px !important;
+        border-radius: 8px !important;
+        font-size: 15px !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-weight: 700 !important;
+        background: #166534 !important;
+        color: #ffffff !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* --- WOOCOMMERCE CART PAGE ON MOBILE --- */
+    .woocommerce table.shop_table.cart,
+    .woocommerce-page table.shop_table.cart {
+        border: none !important;
+    }
+
+    .woocommerce table.shop_table.cart thead,
+    .woocommerce-page table.shop_table.cart thead {
+        display: none !important;
+    }
+
+    .woocommerce table.shop_table.cart tbody tr.cart_item,
+    .woocommerce-page table.shop_table.cart tbody tr.cart_item {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        padding: 14px !important;
+        margin-bottom: 14px !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+        position: relative !important;
+    }
+
+    .woocommerce table.shop_table.cart td,
+    .woocommerce-page table.shop_table.cart td {
+        border: none !important;
+        padding: 4px 6px !important;
+    }
+
+    .woocommerce table.shop_table.cart td.product-remove,
+    .woocommerce-page table.shop_table.cart td.product-remove {
+        position: absolute !important;
+        top: 8px !important;
+        right: 8px !important;
+    }
+
+    .woocommerce table.shop_table.cart td.product-thumbnail,
+    .woocommerce-page table.shop_table.cart td.product-thumbnail {
+        width: 65px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .woocommerce table.shop_table.cart td.product-thumbnail img,
+    .woocommerce-page table.shop_table.cart td.product-thumbnail img {
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 8px !important;
+        object-fit: cover !important;
+    }
+
+    .woocommerce table.shop_table.cart td.product-name,
+    .woocommerce-page table.shop_table.cart td.product-name {
+        flex: 1 !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        padding-right: 28px !important;
+    }
+
+    .woocommerce table.shop_table.cart td.product-price,
+    .woocommerce-page table.shop_table.cart td.product-price {
+        display: none !important;
+    }
+
+    .woocommerce table.shop_table.cart td.product-quantity,
+    .woocommerce-page table.shop_table.cart td.product-quantity {
+        width: auto !important;
+        margin-top: 8px !important;
+    }
+
+    .woocommerce table.shop_table.cart td.product-subtotal,
+    .woocommerce-page table.shop_table.cart td.product-subtotal {
+        margin-left: auto !important;
+        margin-top: 8px !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-size: 15px !important;
+        font-weight: 800 !important;
+        color: #b91c1c !important;
+    }
+
+    .woocommerce .cart-collaterals .cart_totals,
+    .woocommerce-page .cart-collaterals .cart_totals {
+        width: 100% !important;
+        float: none !important;
+        margin-top: 20px !important;
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+    }
+
+    .woocommerce .cart-collaterals .cart_totals .checkout-button,
+    .woocommerce-page .cart-collaterals .cart_totals .checkout-button {
+        width: 100% !important;
+        height: 48px !important;
+        border-radius: 8px !important;
+        font-size: 16px !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-weight: 700 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #166534 !important;
+        color: #ffffff !important;
+    }
+
+    /* --- WOOCOMMERCE CHECKOUT PAGE ON MOBILE --- */
+    .woocommerce .col2-set .col-1,
+    .woocommerce .col2-set .col-2,
+    .woocommerce-page .col2-set .col-1,
+    .woocommerce-page .col2-set .col-2 {
+        width: 100% !important;
+        float: none !important;
+        margin-bottom: 20px !important;
+    }
+
+    .woocommerce form.checkout input.input-text,
+    .woocommerce form.checkout textarea,
+    .woocommerce form.checkout select {
+        height: 46px !important;
+        font-size: 16px !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        padding: 0 14px !important;
+        width: 100% !important;
+    }
+
+    .woocommerce #order_review,
+    .woocommerce-page #order_review {
+        width: 100% !important;
+        float: none !important;
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+    }
+
+    .woocommerce #place_order,
+    .woocommerce-page #place_order {
+        width: 100% !important;
+        height: 50px !important;
+        border-radius: 8px !important;
+        font-size: 17px !important;
+        font-family: 'Noto Sans Bengali', sans-serif !important;
+        font-weight: 800 !important;
+        background: #b91c1c !important;
+        color: #ffffff !important;
+        border: none !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* --- ELEMENTOR MENU PAGES ON MOBILE (ABOUT, FARM, SAFETY, CONTACT) --- */
+    .elementor-element-f5000bd,
+    .elementor-element-9008310,
+    .elementor-element-1f27752,
+    .elementor-element-c0e2a66 {
+        padding: 35px 16px !important;
+    }
+
+    .elementor-element-f5000bd h1,
+    .elementor-element-9008310 h1,
+    .elementor-element-1f27752 h1,
+    .elementor-element-c0e2a66 h1 {
+        font-size: 25px !important;
+        line-height: 1.3 !important;
+    }
+
+    /* Stack 2-column flex containers to 100% vertical on mobile */
+    .elementor-con.e-flex,
+    .elementor-element.e-con-full.e-flex {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    .safwan-feature-card,
+    .safwan-farm-box {
+        width: 100% !important;
+        margin-bottom: 12px !important;
+        padding: 18px 14px !important;
+    }
+
+    .safwan-contact-form {
+        width: 100% !important;
+        padding: 18px 14px !important;
+    }
+
+    .safwan-contact-form input,
+    .safwan-contact-form textarea,
+    .safwan-contact-form button {
+        width: 100% !important;
+        font-size: 15px !important;
+    }
+
+    /* --- FOOTER ON MOBILE (1 COLUMN) --- */
+    #sec_footer_main,
+    .safwan-footer-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 24px !important;
+        padding: 30px 16px !important;
+        text-align: center !important;
+    }
+
+    .safwan-footer-grid > div {
+        width: 100% !important;
+    }
+
+    .safwan-footer-social {
+        justify-content: center !important;
+    }
 }
