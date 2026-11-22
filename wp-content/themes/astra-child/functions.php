@@ -33,7 +33,24 @@ function safwan_child_enqueue_styles() {
     );
     
     // Enqueue Child Theme Style with cache-busting version
-    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.0.9' );
+    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.1.0' );
+
+    // Enqueue AJAX Mini-Cart Controller Script
+    wp_enqueue_script(
+        'safwan-cart-js',
+        get_stylesheet_directory_uri() . '/js/safwan-cart.js',
+        array( 'jquery' ),
+        '1.1.0',
+        true
+    );
+    wp_localize_script(
+        'safwan-cart-js',
+        'safwan_cart_params',
+        array(
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'nonce'    => wp_create_nonce( 'safwan_cart_nonce' ),
+        )
+    );
 }
 add_action( 'wp_enqueue_scripts', 'safwan_child_enqueue_styles', 15 );
 
@@ -157,13 +174,15 @@ function safwan_add_header_editor_admin_bar( $admin_bar ) {
 add_action( 'admin_bar_menu', 'safwan_add_header_editor_admin_bar', 999 );
 
 /**
- * Render Header Cart Button with Real-time Count & Subtotal
+ * Render Header Cart Dropdown & Button
  */
 function safwan_render_cart_button_html( $is_mobile = false ) {
-    $cart_count = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
-    $cart_total = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_total() : '০.০০ ৳';
-    $cart_url   = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
-    
+    $cart_count   = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+    $cart_total   = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_total() : '০.০০ ৳';
+    $cart_url     = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
+    $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/checkout/');
+    $shop_url     = home_url('/shop/');
+
     if ( $is_mobile ) {
         return '<a href="' . esc_url( $cart_url ) . '" class="safwan-mobile-cart-btn" title="শপিং কার্ট">'
             . '<span class="safwan-cart-icon-wrap">'
@@ -173,14 +192,186 @@ function safwan_render_cart_button_html( $is_mobile = false ) {
             . '</a>';
     }
 
-    return '<a href="' . esc_url( $cart_url ) . '" class="safwan-header-cart-btn" title="শপিং কার্ট দেখুন">'
-        . '<span class="safwan-cart-icon-wrap">'
-        . '<svg class="safwan-cart-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>'
-        . '<span class="safwan-cart-count">' . esc_html( $cart_count ) . '</span>'
-        . '</span>'
-        . '<span class="safwan-cart-total">' . $cart_total . '</span>'
-        . '</a>';
+    $cart_items = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart() : array();
+
+    ob_start();
+    ?>
+    <div class="safwan-cart-dropdown-wrapper">
+        <a href="<?php echo esc_url( $cart_url ); ?>" class="safwan-header-cart-btn" title="শপিং কার্ট দেখুন">
+            <span class="safwan-cart-icon-wrap">
+                <svg class="safwan-cart-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+                <span class="safwan-cart-count"><?php echo esc_html( $cart_count ); ?></span>
+            </span>
+            <span class="safwan-cart-total"><?php echo $cart_total; ?></span>
+        </a>
+
+        <div class="safwan-mini-cart-dropdown">
+            <div class="safwan-mini-cart-header">
+                <span class="safwan-mini-cart-title">🛒 আপনার শপিং কার্ট</span>
+                <span class="safwan-mini-cart-badge"><?php echo esc_html( $cart_count ); ?>টি পণ্য</span>
+            </div>
+
+            <?php if ( ! empty( $cart_items ) ) : ?>
+                <div class="safwan-mini-cart-items-list">
+                    <?php foreach ( $cart_items as $cart_item_key => $cart_item ) :
+                        $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+                        if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 ) :
+                            $product_name  = $_product->get_name();
+                            $thumbnail     = $_product->get_image( array( 48, 48 ) );
+                            $product_price = WC()->cart->get_product_price( $_product );
+                            $product_url   = $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '';
+                    ?>
+                        <div class="safwan-mini-cart-item" data-cart-item-key="<?php echo esc_attr( $cart_item_key ); ?>">
+                            <div class="safwan-mini-cart-thumb">
+                                <?php if ( $product_url ) : ?>
+                                    <a href="<?php echo esc_url( $product_url ); ?>"><?php echo $thumbnail; ?></a>
+                                <?php else : ?>
+                                    <?php echo $thumbnail; ?>
+                                <?php endif; ?>
+                            </div>
+                            <div class="safwan-mini-cart-info">
+                                <h5 class="safwan-mini-cart-item-title">
+                                    <?php if ( $product_url ) : ?>
+                                        <a href="<?php echo esc_url( $product_url ); ?>"><?php echo esc_html( $product_name ); ?></a>
+                                    <?php else : ?>
+                                        <?php echo esc_html( $product_name ); ?>
+                                    <?php endif; ?>
+                                </h5>
+                                <div class="safwan-mini-cart-item-meta">
+                                    <span class="safwan-item-qty"><?php echo esc_html( $cart_item['quantity'] ); ?></span> × <span class="safwan-item-price"><?php echo $product_price; ?></span>
+                                </div>
+                            </div>
+                            <button type="button" class="safwan-cart-remove-btn" data-cart-item-key="<?php echo esc_attr( $cart_item_key ); ?>" title="পণ্যটি কার্ট থেকে মুছুন" aria-label="Remove item">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                    <?php endif; endforeach; ?>
+                </div>
+
+                <div class="safwan-mini-cart-footer">
+                    <div class="safwan-mini-cart-subtotal-row">
+                        <span class="safwan-subtotal-label">মোট প্রদেয়:</span>
+                        <span class="safwan-subtotal-val"><?php echo $cart_total; ?></span>
+                    </div>
+                    <div class="safwan-mini-cart-actions">
+                        <a href="<?php echo esc_url( $cart_url ); ?>" class="safwan-mini-cart-view-btn">কার্ট দেখুন</a>
+                        <a href="<?php echo esc_url( $checkout_url ); ?>" class="safwan-mini-cart-checkout-btn">চেকআউট করুন</a>
+                    </div>
+                </div>
+            <?php else : ?>
+                <div class="safwan-mini-cart-empty">
+                    <div class="safwan-empty-bag-icon">
+                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    </div>
+                    <p class="safwan-empty-msg">আপনার কার্ট বর্তমানে খালি আছে!</p>
+                    <a href="<?php echo esc_url( $shop_url ); ?>" class="safwan-empty-go-shop">শপিং শুরু করুন</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
 }
+
+/**
+ * Render Mobile Cart Drawer
+ */
+function safwan_render_mobile_cart_drawer_html() {
+    $cart_count   = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+    $cart_total   = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart_total() : '০.০০ ৳';
+    $cart_url     = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
+    $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/checkout/');
+    $shop_url     = home_url('/shop/');
+    $cart_items   = ( function_exists('WC') && WC()->cart ) ? WC()->cart->get_cart() : array();
+
+    ob_start();
+    ?>
+    <div class="safwan-mobile-cart-drawer">
+        <div class="safwan-mobile-drawer-header">
+            <div class="safwan-drawer-title-wrap">
+                <span class="safwan-drawer-title">🛒 আপনার শপিং কার্ট</span>
+                <span class="safwan-drawer-badge"><?php echo esc_html( $cart_count ); ?>টি পণ্য</span>
+            </div>
+            <button type="button" class="safwan-mobile-cart-close" aria-label="Close cart">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <div class="safwan-drawer-body">
+            <?php if ( ! empty( $cart_items ) ) : ?>
+                <div class="safwan-mini-cart-items-list">
+                    <?php foreach ( $cart_items as $cart_item_key => $cart_item ) :
+                        $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+                        if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 ) :
+                            $product_name  = $_product->get_name();
+                            $thumbnail     = $_product->get_image( array( 48, 48 ) );
+                            $product_price = WC()->cart->get_product_price( $_product );
+                            $product_url   = $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '';
+                    ?>
+                        <div class="safwan-mini-cart-item" data-cart-item-key="<?php echo esc_attr( $cart_item_key ); ?>">
+                            <div class="safwan-mini-cart-thumb">
+                                <?php if ( $product_url ) : ?>
+                                    <a href="<?php echo esc_url( $product_url ); ?>"><?php echo $thumbnail; ?></a>
+                                <?php else : ?>
+                                    <?php echo $thumbnail; ?>
+                                <?php endif; ?>
+                            </div>
+                            <div class="safwan-mini-cart-info">
+                                <h5 class="safwan-mini-cart-item-title">
+                                    <?php if ( $product_url ) : ?>
+                                        <a href="<?php echo esc_url( $product_url ); ?>"><?php echo esc_html( $product_name ); ?></a>
+                                    <?php else : ?>
+                                        <?php echo esc_html( $product_name ); ?>
+                                    <?php endif; ?>
+                                </h5>
+                                <div class="safwan-mini-cart-item-meta">
+                                    <span class="safwan-item-qty"><?php echo esc_html( $cart_item['quantity'] ); ?></span> × <span class="safwan-item-price"><?php echo $product_price; ?></span>
+                                </div>
+                            </div>
+                            <button type="button" class="safwan-cart-remove-btn" data-cart-item-key="<?php echo esc_attr( $cart_item_key ); ?>" title="পণ্যটি কার্ট থেকে মুছুন" aria-label="Remove item">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                    <?php endif; endforeach; ?>
+                </div>
+
+                <div class="safwan-drawer-footer">
+                    <div class="safwan-mini-cart-subtotal-row">
+                        <span class="safwan-subtotal-label">মোট প্রদেয়:</span>
+                        <span class="safwan-subtotal-val"><?php echo $cart_total; ?></span>
+                    </div>
+                    <div class="safwan-mini-cart-actions">
+                        <a href="<?php echo esc_url( $cart_url ); ?>" class="safwan-mini-cart-view-btn">কার্ট দেখুন</a>
+                        <a href="<?php echo esc_url( $checkout_url ); ?>" class="safwan-mini-cart-checkout-btn">চেকআউট করুন</a>
+                    </div>
+                </div>
+            <?php else : ?>
+                <div class="safwan-mini-cart-empty">
+                    <div class="safwan-empty-bag-icon">
+                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    </div>
+                    <p class="safwan-empty-msg">আপনার কার্ট বর্তমানে খালি আছে!</p>
+                    <a href="<?php echo esc_url( $shop_url ); ?>" class="safwan-empty-go-shop">শপিং শুরু করুন</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+/**
+ * Output Mobile Drawer & Backdrop in Footer
+ */
+function safwan_render_mobile_cart_drawer_in_footer() {
+    echo safwan_render_mobile_cart_drawer_html();
+    echo '<div class="safwan-cart-backdrop"></div>';
+}
+add_action( 'wp_footer', 'safwan_render_mobile_cart_drawer_in_footer' );
 
 function safwan_cart_button_shortcode() {
     return safwan_render_cart_button_html( false );
@@ -193,12 +384,40 @@ function safwan_cart_button_mobile_shortcode() {
 add_shortcode( 'safwan_cart_button_mobile', 'safwan_cart_button_mobile_shortcode' );
 
 /**
- * Update Cart Button via WooCommerce AJAX
+ * Update Cart Button & Dropdown via WooCommerce AJAX
  */
 function safwan_add_cart_fragments( $fragments ) {
-    $fragments['a.safwan-header-cart-btn'] = safwan_render_cart_button_html( false );
-    $fragments['a.safwan-mobile-cart-btn'] = safwan_render_cart_button_html( true );
+    $fragments['div.safwan-cart-dropdown-wrapper'] = safwan_render_cart_button_html( false );
+    $fragments['a.safwan-mobile-cart-btn']         = safwan_render_cart_button_html( true );
+    $fragments['div.safwan-mobile-cart-drawer']    = safwan_render_mobile_cart_drawer_html();
     return $fragments;
 }
 add_filter( 'woocommerce_add_to_cart_fragments', 'safwan_add_cart_fragments' );
+
+/**
+ * AJAX Remove from Cart Handler (Zero Page Reload)
+ */
+function safwan_ajax_remove_from_cart() {
+    check_ajax_referer( 'safwan_cart_nonce', 'nonce' );
+    $cart_item_key = sanitize_text_field( $_POST['cart_item_key'] ?? '' );
+    
+    $removed = false;
+    if ( $cart_item_key && function_exists('WC') && WC()->cart ) {
+        $removed = WC()->cart->remove_cart_item( $cart_item_key );
+        WC()->cart->calculate_totals();
+    }
+    
+    $fragments = apply_filters( 'woocommerce_add_to_cart_fragments', array() );
+    
+    wp_send_json_success( array(
+        'removed'   => $removed,
+        'fragments' => $fragments,
+        'cart_hash' => WC()->cart ? WC()->cart->get_cart_hash() : '',
+        'count'     => WC()->cart ? WC()->cart->get_cart_contents_count() : 0,
+        'total'     => WC()->cart ? WC()->cart->get_cart_total() : '০.০০ ৳',
+    ) );
+}
+add_action( 'wp_ajax_safwan_remove_from_cart', 'safwan_ajax_remove_from_cart' );
+add_action( 'wp_ajax_nopriv_safwan_remove_from_cart', 'safwan_ajax_remove_from_cart' );
+
 
