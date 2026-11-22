@@ -378,85 +378,51 @@ button.safwan-slider-arrow:hover svg,
    SAFWAN AGRO — MODERN E-COMMERCE HEADER & MENU (V2)
    ======================================================== */
 
-/* Sticky Header & Navbar Behavior:
-   When scrolling down, Top Announcement Bar and Main Header hide/collapse smoothly,
-   and ONLY the Navigation Menu Bar stays sticky at the top! */
-
+/* ========================================================
+   ROCK-SOLID STICKY MENU BAR (ZERO SHAKING, DESKTOP ONLY)
+   ======================================================== */
 @media (min-width: 922px) {
     #masthead,
     .elementor-32 {
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 9999 !important;
+        position: relative !important;
         background: transparent !important;
         box-shadow: none !important;
         transition: none !important;
     }
 
-    .admin-bar #masthead,
-    .admin-bar .elementor-32 {
+    /* Fixed Sticky Navbar when scrolled */
+    .safwan-navbar-wrapper.is-sticky,
+    .elementor-element-sng_navbar.is-sticky {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 999999 !important;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.28) !important;
+        animation: safwanSlideDown 0.22s ease-out !important;
+    }
+
+    .admin-bar .safwan-navbar-wrapper.is-sticky,
+    .admin-bar .elementor-element-sng_navbar.is-sticky {
         top: 32px !important;
     }
 
-    /* Top Announcement Bar & Main Header smooth hide/collapse */
-    .safwan-topbar,
-    .elementor-element-sng_topbar,
-    .safwan-main-header,
-    .elementor-element-sng_main_header {
-        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                    opacity 0.25s ease,
-                    padding 0.3s ease,
-                    margin 0.3s ease,
-                    visibility 0.35s ease !important;
-        overflow: hidden !important;
+    /* Prevent page content jump when navbar goes fixed */
+    body.safwan-nav-is-sticky #masthead,
+    body.safwan-nav-is-sticky .elementor-32 {
+        padding-bottom: 52px !important;
     }
+}
 
-    .safwan-topbar,
-    .elementor-element-sng_topbar {
-        max-height: 50px;
+@keyframes safwanSlideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0.9;
     }
-
-    .safwan-main-header,
-    .elementor-element-sng_main_header {
-        max-height: 120px;
-    }
-
-    /* WHEN SCROLLED: Hide topbar and main header COMPLETELY! */
-    body.safwan-scrolled .safwan-topbar,
-    body.safwan-scrolled .elementor-element-sng_topbar,
-    #masthead.safwan-scrolled .safwan-topbar,
-    #masthead.safwan-scrolled .elementor-element-sng_topbar,
-    body.safwan-scrolled .safwan-main-header,
-    body.safwan-scrolled .elementor-element-sng_main_header,
-    #masthead.safwan-scrolled .safwan-main-header,
-    #masthead.safwan-scrolled .elementor-element-sng_main_header {
-        max-height: 0 !important;
-        min-height: 0 !important;
-        height: 0 !important;
-        opacity: 0 !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        border: none !important;
-        visibility: hidden !important;
-        pointer-events: none !important;
-    }
-
-    /* ONLY Navigation Menu Bar remains sticky, with elevated shadow */
-    .safwan-navbar-wrapper,
-    .elementor-element-sng_navbar {
-        position: relative !important;
-        z-index: 9999 !important;
-        width: 100% !important;
-        box-shadow: 0 4px 14px rgba(22, 101, 52, 0.18) !important;
-        transition: box-shadow 0.3s ease !important;
-    }
-
-    body.safwan-scrolled .safwan-navbar-wrapper,
-    #masthead.safwan-scrolled .safwan-navbar-wrapper {
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28) !important;
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
@@ -470,6 +436,7 @@ button.safwan-slider-arrow:hover svg,
         z-index: 9999 !important;
         background: #ffffff !important;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+        width: 100% !important;
     }
 
     .admin-bar #masthead,
@@ -2473,5 +2440,64 @@ img, svg, video, iframe {
         width: calc(50% - 6px) !important;
         max-width: calc(50% - 6px) !important;
         flex: 0 0 calc(50% - 6px) !important;
+    }
+}
+
+
+/* ==========================================================================
+   MASTER FINAL OVERRIDE: 100% BULLETPROOF DESKTOP VS MOBILE HEADER LOCK
+   (Placed at the absolute bottom of stylesheet to guarantee final cascade priority)
+   ========================================================================== */
+
+/* DESKTOP (922px and up): HIDE Mobile Header 100% */
+@media (min-width: 922px) {
+    div.safwan-mobile-header,
+    div.elementor-element-sng_mobile_header {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        max-height: 0 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -9999px !important;
+    }
+}
+
+/* MOBILE & TABLET (921px and below): HIDE Desktop Headers 100% & SHOW Mobile Header */
+@media (max-width: 921px) {
+    div.safwan-topbar,
+    div.elementor-element-sng_topbar,
+    div.safwan-main-header,
+    div.elementor-element-sng_main_header,
+    div.safwan-navbar-wrapper,
+    div.elementor-element-sng_navbar {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        max-height: 0 !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -9999px !important;
+    }
+
+    div.safwan-mobile-header,
+    div.elementor-element-sng_mobile_header {
+        display: flex !important;
+        flex-direction: column !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        position: relative !important;
+        left: auto !important;
+        pointer-events: auto !important;
     }
 }

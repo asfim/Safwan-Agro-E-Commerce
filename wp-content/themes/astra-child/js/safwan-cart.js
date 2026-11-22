@@ -94,61 +94,6 @@
             $('body').removeClass('safwan-cart-drawer-active');
         });
 
-        // 4. Sticky Menu Bar Controller (Hide Topbar & Main Header, Keep Navbar Sticky)
-        function initStickyNavbar() {
-            var $masthead = $('#masthead');
-            if (!$masthead.length) $masthead = $('.elementor-32');
-
-            var $topbar = $('.safwan-topbar, .elementor-element-sng_topbar');
-            var $mainHeader = $('.safwan-main-header, .elementor-element-sng_main_header');
-
-            function updateStickyOffsets() {
-                if (window.innerWidth > 921) {
-                    var hideHeight = 0;
-                    if ($topbar.length && $topbar.is(':visible')) {
-                        hideHeight += $topbar.outerHeight() || 0;
-                    }
-                    if ($mainHeader.length && $mainHeader.is(':visible')) {
-                        hideHeight += $mainHeader.outerHeight() || 0;
-                    }
-
-                    if (hideHeight > 0) {
-                        document.documentElement.style.setProperty('--safwan-header-hide-height', hideHeight + 'px');
-                    }
-                } else {
-                    document.documentElement.style.setProperty('--safwan-header-hide-height', '0px');
-                }
-            }
-
-            function handleScroll() {
-                if (window.innerWidth <= 921) return;
-                var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-                if (currentScroll > 50) {
-                    $masthead.addClass('safwan-scrolled safwan-nav-is-sticky');
-                    $('body').addClass('safwan-scrolled safwan-sticky-active');
-                } else {
-                    $masthead.removeClass('safwan-scrolled safwan-nav-is-sticky');
-                    $('body').removeClass('safwan-scrolled safwan-sticky-active');
-                }
-            }
-
-            updateStickyOffsets();
-            handleScroll();
-
-            $(window).on('scroll', handleScroll);
-            $(window).on('resize orientationchange', function() {
-                updateStickyOffsets();
-                handleScroll();
-            });
-
-            // Re-check after images/fonts finish loading
-            setTimeout(updateStickyOffsets, 300);
-            setTimeout(updateStickyOffsets, 1000);
-        }
-
-        initStickyNavbar();
-
     });
 
 })(jQuery);

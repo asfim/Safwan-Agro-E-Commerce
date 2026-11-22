@@ -33,14 +33,14 @@ function safwan_child_enqueue_styles() {
     );
     
     // Enqueue Child Theme Style with cache-busting version
-    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.4.0' );
+    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.5.0' );
 
     // Enqueue AJAX Mini-Cart Controller Script
     wp_enqueue_script(
         'safwan-cart-js',
         get_stylesheet_directory_uri() . '/js/safwan-cart.js',
         array( 'jquery' ),
-        '1.4.0',
+        '1.5.0',
         true
     );
     wp_localize_script(
@@ -55,29 +55,73 @@ function safwan_child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'safwan_child_enqueue_styles', 15 );
 
 /**
- * Instant Sticky Header & Scroll Hide Handler in wp_head
- * Ensures immediate 60fps execution with zero layout delay
+ * Rock-Solid Sticky Menu Bar Controller in wp_head (Zero Shaking, Zero Layout Shifts)
  */
 function safwan_inline_sticky_header_script() {
     ?>
     <script>
     (function() {
-        function updateStickyState() {
+        var isSticky = false;
+        var triggerOffset = 0;
+
+        function getNav() {
+            return document.querySelector('.safwan-navbar-wrapper, .elementor-element-sng_navbar');
+        }
+
+        function calculateTrigger() {
             if (window.innerWidth <= 921) return;
-            var scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-            var masthead = document.getElementById('masthead') || document.querySelector('.elementor-32');
-            if (scrollY > 50) {
-                document.body.classList.add('safwan-scrolled');
-                if (masthead) masthead.classList.add('safwan-scrolled');
-            } else {
-                document.body.classList.remove('safwan-scrolled');
-                if (masthead) masthead.classList.remove('safwan-scrolled');
+            var nav = getNav();
+            if (nav && !isSticky) {
+                var rect = nav.getBoundingClientRect();
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                triggerOffset = rect.top + scrollTop;
             }
         }
-        window.addEventListener('scroll', updateStickyState, { passive: true });
-        window.addEventListener('resize', updateStickyState, { passive: true });
-        document.addEventListener('DOMContentLoaded', updateStickyState);
-        updateStickyState();
+
+        function onScroll() {
+            if (window.innerWidth <= 921) {
+                if (isSticky) {
+                    isSticky = false;
+                    document.body.classList.remove('safwan-nav-is-sticky');
+                    var nav = getNav();
+                    if (nav) nav.classList.remove('is-sticky');
+                }
+                return;
+            }
+
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (triggerOffset <= 0) calculateTrigger();
+
+            if (scrollTop >= triggerOffset && triggerOffset > 0) {
+                if (!isSticky) {
+                    isSticky = true;
+                    document.body.classList.add('safwan-nav-is-sticky');
+                    var nav = getNav();
+                    if (nav) nav.classList.add('is-sticky');
+                }
+            } else {
+                if (isSticky) {
+                    isSticky = false;
+                    document.body.classList.remove('safwan-nav-is-sticky');
+                    var nav = getNav();
+                    if (nav) nav.classList.remove('is-sticky');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', function() {
+            if (!isSticky) calculateTrigger();
+            onScroll();
+        }, { passive: true });
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateTrigger();
+            onScroll();
+        });
+        window.addEventListener('load', function() {
+            calculateTrigger();
+            onScroll();
+        });
     })();
     </script>
     <?php
