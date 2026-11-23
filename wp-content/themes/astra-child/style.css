@@ -411,7 +411,7 @@ button.safwan-slider-arrow:hover svg,
     /* Prevent page content jump when navbar goes fixed */
     body.safwan-nav-is-sticky #masthead,
     body.safwan-nav-is-sticky .elementor-32 {
-        padding-bottom: 52px !important;
+        padding-bottom: 46px !important;
     }
 }
 
@@ -454,8 +454,8 @@ button.safwan-slider-arrow:hover svg,
 .elementor-element-sng_topbar {
     background: #0c3324 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding: 7px 28px !important;
-    min-height: 36px !important;
+    padding: 4px 28px !important;
+    min-height: 30px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -526,12 +526,22 @@ button.safwan-slider-arrow:hover svg,
 .safwan-main-header,
 .elementor-element-sng_main_header {
     background: #ffffff !important;
-    padding: 12px 28px !important;
+    padding: 4px 28px !important;
     border-bottom: 1px solid #f1f5f9 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     gap: 20px !important;
+}
+
+/* Force zero top/bottom padding on child columns in main header */
+.elementor-element-sng_col_logo,
+.elementor-element-sng_col_search,
+.elementor-element-sng_col_actions {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* Brand Identity (Logo Avatar + Text) */
@@ -543,8 +553,8 @@ button.safwan-slider-arrow:hover svg,
 }
 
 .safwan-brand-img {
-    width: 48px !important;
-    height: 48px !important;
+    width: 42px !important;
+    height: 42px !important;
     border-radius: 50% !important;
     object-fit: cover !important;
     border: 2px solid #e2e8f0 !important;
@@ -566,7 +576,7 @@ button.safwan-slider-arrow:hover svg,
 
 .safwan-brand-title {
     font-family: 'Noto Sans Bengali', sans-serif !important;
-    font-size: 21px !important;
+    font-size: 20px !important;
     font-weight: 800 !important;
     color: #0f172a !important;
     letter-spacing: -0.3px !important;
@@ -599,7 +609,7 @@ button.safwan-slider-arrow:hover svg,
     background: #f8fafc !important;
     overflow: hidden !important;
     transition: all 0.25s ease !important;
-    height: 46px !important;
+    height: 40px !important;
     display: flex !important;
     align-items: center !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) inset !important;
@@ -676,7 +686,7 @@ button.safwan-slider-arrow:hover svg,
     align-items: center !important;
     gap: 10px !important;
     text-decoration: none !important;
-    padding: 6px 12px !important;
+    padding: 4px 10px !important;
     border-radius: 12px !important;
     transition: background 0.2s ease !important;
 }
@@ -686,15 +696,15 @@ button.safwan-slider-arrow:hover svg,
 }
 
 .safwan-hotline-icon {
-    width: 38px !important;
-    height: 38px !important;
+    width: 34px !important;
+    height: 34px !important;
     border-radius: 50% !important;
     background: #ecfdf5 !important;
     color: #166534 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     box-shadow: 0 2px 6px rgba(22, 101, 52, 0.1) !important;
 }
 
@@ -723,13 +733,13 @@ button.safwan-slider-arrow:hover svg,
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
-    padding: 8px 16px !important;
+    padding: 6px 14px !important;
     border: 1.5px solid #e2e8f0 !important;
     border-radius: 50px !important;
     color: #1e293b !important;
     text-decoration: none !important;
     font-family: 'Noto Sans Bengali', sans-serif !important;
-    font-size: 13.5px !important;
+    font-size: 13px !important;
     font-weight: 600 !important;
     transition: all 0.2s ease !important;
     background: #ffffff !important;
@@ -776,7 +786,7 @@ button.safwan-slider-arrow:hover svg,
     gap: 10px !important;
     background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important;
     color: #ffffff !important;
-    padding: 8px 18px !important;
+    padding: 6px 14px !important;
     border-radius: 50px !important;
     text-decoration: none !important;
     box-shadow: 0 4px 14px rgba(185, 28, 28, 0.25) !important;
