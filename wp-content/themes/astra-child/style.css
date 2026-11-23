@@ -381,7 +381,7 @@ button.safwan-slider-arrow:hover svg,
 /* ========================================================
    ROCK-SOLID STICKY MENU BAR (ZERO SHAKING, DESKTOP ONLY)
    ======================================================== */
-@media (min-width: 922px) {
+@media (min-width: 1025px) {
     #masthead,
     .elementor-32 {
         position: relative !important;
@@ -426,10 +426,9 @@ button.safwan-slider-arrow:hover svg,
     }
 }
 
-/* On mobile view, keep mobile header sticky at top */
-@media screen and (max-width: 921px) {
-    #masthead,
-    .elementor-32 {
+/* On mobile & tablet view, keep entire header sticky at top */
+@media screen and (max-width: 1024px) {
+    #masthead {
         position: -webkit-sticky !important;
         position: sticky !important;
         top: 0 !important;
@@ -439,54 +438,14 @@ button.safwan-slider-arrow:hover svg,
         width: 100% !important;
     }
 
-    .admin-bar #masthead,
-    .admin-bar .elementor-32 {
+    .admin-bar #masthead {
+        top: 32px !important;
+    }
+}
+
+@media screen and (max-width: 782px) {
+    .admin-bar #masthead {
         top: 46px !important;
-    }
-}
-
-/* ========================================================
-   HEADER VISIBILITY BREAKPOINTS (STRICT DESKTOP VS MOBILE)
-   ======================================================== */
-
-@media (min-width: 922px) {
-    /* Desktop: Hide Mobile Header */
-    .safwan-mobile-header,
-    .elementor-element-sng_mobile_header {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        overflow: hidden !important;
-    }
-}
-
-@media (max-width: 921px) {
-    /* Mobile & Tablet: HIDE Desktop Topbar, Main Header, and Navbar */
-    .safwan-topbar,
-    .elementor-element-sng_topbar,
-    .safwan-main-header,
-    .elementor-element-sng_main_header,
-    .safwan-navbar-wrapper,
-    .elementor-element-sng_navbar {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        max-height: 0 !important;
-        min-height: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        border: none !important;
-        overflow: hidden !important;
-    }
-
-    /* Mobile & Tablet: SHOW ONLY Mobile Header */
-    .safwan-mobile-header,
-    .elementor-element-sng_mobile_header {
-        display: flex !important;
-        flex-direction: column !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 100% !important;
     }
 }
 
@@ -2445,59 +2404,170 @@ img, svg, video, iframe {
 
 
 /* ==========================================================================
-   MASTER FINAL OVERRIDE: 100% BULLETPROOF DESKTOP VS MOBILE HEADER LOCK
-   (Placed at the absolute bottom of stylesheet to guarantee final cascade priority)
+   ELEMENTOR NATIVE RESPONSIVE ENGINE (DESKTOP, TABLET, MOBILE)
+   Allows full Elementor editing and 100% strict live separation
    ========================================================================== */
 
-/* DESKTOP (922px and up): HIDE Mobile Header 100% */
-@media (min-width: 922px) {
-    div.safwan-mobile-header,
-    div.elementor-element-sng_mobile_header {
+/* 1. FRONTEND: Live Device Separation based on Elementor Breakpoints */
+@media (min-width: 1025px) {
+    /* Desktop: Hide elements marked for Tablet or Mobile */
+    body:not(.elementor-editor-active) .elementor-hidden-desktop,
+    body:not(.elementor-editor-active) .safwan-tablet-header-wrapper,
+    body:not(.elementor-editor-active) .safwan-mobile-header-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper {
         display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        max-height: 0 !important;
-        min-height: 0 !important;
-        overflow: hidden !important;
-        pointer-events: none !important;
-        position: absolute !important;
-        left: -9999px !important;
+    }
+
+    body:not(.elementor-editor-active) .safwan-desktop-header-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_desktop_header_wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
     }
 }
 
-/* MOBILE & TABLET (921px and below): HIDE Desktop Headers 100% & SHOW Mobile Header */
-@media (max-width: 921px) {
-    div.safwan-topbar,
-    div.elementor-element-sng_topbar,
-    div.safwan-main-header,
-    div.elementor-element-sng_main_header,
-    div.safwan-navbar-wrapper,
-    div.elementor-element-sng_navbar {
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet: Hide elements marked for Desktop or Mobile */
+    body:not(.elementor-editor-active) .elementor-hidden-tablet,
+    body:not(.elementor-editor-active) .safwan-desktop-header-wrapper,
+    body:not(.elementor-editor-active) .safwan-mobile-header-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_desktop_header_wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper {
         display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        max-height: 0 !important;
-        min-height: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        border: none !important;
-        overflow: hidden !important;
-        pointer-events: none !important;
-        position: absolute !important;
-        left: -9999px !important;
     }
 
-    div.safwan-mobile-header,
-    div.elementor-element-sng_mobile_header {
+    body:not(.elementor-editor-active) .safwan-tablet-header-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper {
         display: flex !important;
         flex-direction: column !important;
-        visibility: visible !important;
-        opacity: 1 !important;
         width: 100% !important;
-        height: auto !important;
-        max-height: none !important;
-        position: relative !important;
-        left: auto !important;
-        pointer-events: auto !important;
     }
+}
+
+@media (max-width: 767px) {
+    /* Mobile: Hide elements marked for Desktop or Tablet */
+    body:not(.elementor-editor-active) .elementor-hidden-mobile,
+    body:not(.elementor-editor-active) .safwan-desktop-header-wrapper,
+    body:not(.elementor-editor-active) .safwan-tablet-header-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_desktop_header_wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper {
+        display: none !important;
+    }
+
+    body:not(.elementor-editor-active) .safwan-mobile-header-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+}
+
+/* Category column & Menu horizontal alignment */
+.elementor-element-sng_nav_cat_col {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* 2. ELEMENTOR EDITOR: Allow smooth editing in all device switcher modes */
+.elementor-editor-active .elementor-hidden-desktop,
+.elementor-editor-active .elementor-hidden-tablet,
+.elementor-editor-active .elementor-hidden-mobile {
+    opacity: 0.65 !important;
+}
+
+/* Tablet Header Styling */
+.safwan-tablet-header-wrapper {
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.safwan-tablet-row1 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 20px !important;
+    width: 100% !important;
+}
+
+.safwan-tablet-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    text-decoration: none !important;
+}
+
+.safwan-tablet-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.safwan-tablet-actions .safwan-action-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1e293b;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.safwan-tablet-actions .safwan-action-btn:hover {
+    border-color: #166534;
+    color: #166534;
+}
+
+.safwan-tablet-row2 {
+    padding: 0 20px 10px !important;
+    width: 100% !important;
+}
+
+.safwan-tablet-pills-row {
+    background: #166534 !important;
+    padding: 6px 20px !important;
+    width: 100% !important;
+}
+
+.safwan-tablet-pills-scroll {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.safwan-tablet-pills-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.safwan-t-pill {
+    color: #ffffff;
+    font-family: 'Noto Sans Bengali', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.safwan-t-pill:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fef08a;
+}
+
+.safwan-t-deal {
+    background: #f59e0b;
+    color: #1e293b;
+    font-weight: 700;
+    border-radius: 50px;
 }

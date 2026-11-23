@@ -33,14 +33,14 @@ function safwan_child_enqueue_styles() {
     );
     
     // Enqueue Child Theme Style with cache-busting version
-    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.5.0' );
+    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.6.1' );
 
     // Enqueue AJAX Mini-Cart Controller Script
     wp_enqueue_script(
         'safwan-cart-js',
         get_stylesheet_directory_uri() . '/js/safwan-cart.js',
         array( 'jquery' ),
-        '1.5.0',
+        '1.6.1',
         true
     );
     wp_localize_script(
@@ -69,7 +69,7 @@ function safwan_inline_sticky_header_script() {
         }
 
         function calculateTrigger() {
-            if (window.innerWidth <= 921) return;
+            if (window.innerWidth <= 1024 || document.body.classList.contains('elementor-editor-active')) return;
             var nav = getNav();
             if (nav && !isSticky) {
                 var rect = nav.getBoundingClientRect();
@@ -79,7 +79,7 @@ function safwan_inline_sticky_header_script() {
         }
 
         function onScroll() {
-            if (window.innerWidth <= 921) {
+            if (window.innerWidth <= 1024 || document.body.classList.contains('elementor-editor-active')) {
                 if (isSticky) {
                     isSticky = false;
                     document.body.classList.remove('safwan-nav-is-sticky');
