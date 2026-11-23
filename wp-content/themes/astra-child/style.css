@@ -1294,7 +1294,8 @@ body.safwan-cart-drawer-active {
     box-shadow: 0 4px 14px rgba(22, 101, 52, 0.15) !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
+    gap: 15px !important;
 }
 
 /* Category Pill */
@@ -2605,10 +2606,21 @@ img, svg, video, iframe {
     text-decoration: none !important;
 }
 
-.safwan-tablet-actions {
+.safwan-tablet-actions,
+.elementor-element-sng_t_actions_col {
     display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
-    gap: 12px !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+}
+
+.safwan-tablet-actions .elementor-widget,
+.elementor-element-sng_t_actions_col .elementor-widget {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
 .safwan-tablet-actions .safwan-action-btn {

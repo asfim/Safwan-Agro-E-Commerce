@@ -33,7 +33,7 @@ function safwan_child_enqueue_styles() {
     );
     
     // Enqueue Child Theme Style with cache-busting version
-    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.6.5' );
+    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.6.6' );
 
     // Enqueue AJAX Mini-Cart Controller Script
     wp_enqueue_script(
@@ -493,5 +493,55 @@ function safwan_ajax_remove_from_cart() {
 }
 add_action( 'wp_ajax_safwan_remove_from_cart', 'safwan_ajax_remove_from_cart' );
 add_action( 'wp_ajax_nopriv_safwan_remove_from_cart', 'safwan_ajax_remove_from_cart' );
+
+/**
+ * Real-Time Elementor Header/Footer Publishing & Cache Busting
+ * Ensures any edits made in Elementor publish immediately without cache delay
+ */
+
+// 1. Permanently disable Elementor Element Caching feature so live edits reflect immediately
+add_filter( 'elementor/element_cache/is_cacheable', '__return_false', 999 );
+
+// 2. Clear all Elementor and server caches automatically whenever a post/header is updated in Elementor
+add_action( 'elementor/document/after_save', 'safwan_purge_all_elementor_caches', 10, 1 );
+add_action( 'save_post', 'safwan_purge_header_caches_on_save', 10, 2 );
+
+function safwan_purge_all_elementor_caches( $document ) {
+    $post_id = is_object( $document ) ? $document->get_id() : 32;
+    delete_post_meta( $post_id, '_elementor_element_cache' );
+    delete_post_meta_by_key( '_elementor_element_cache' );
+    
+    if ( class_exists( '\Elementor\Plugin' ) ) {
+        \Elementor\Plugin::$instance->files_manager->clear_cache();
+    }
+    
+    if ( class_exists( '\LiteSpeed\Purge' ) ) {
+        \LiteSpeed\Purge::purge_all();
+    }
+}
+
+function safwan_purge_header_caches_on_save( $post_id, $post = null ) {
+    if ( $post_id == 32 || ( is_object( $post ) && $post->post_type === 'elementor-hf' ) ) {
+        delete_post_meta( $post_id, '_elementor_element_cache' );
+        delete_post_meta_by_key( '_elementor_element_cache' );
+        
+        if ( class_exists( '\Elementor\Plugin' ) ) {
+            \Elementor\Plugin::$instance->files_manager->clear_cache();
+        }
+        
+        if ( class_exists( '\LiteSpeed\Purge' ) ) {
+            \LiteSpeed\Purge::purge_all();
+        }
+    }
+}
+
+// 3. Ensure any shortcodes inside Elementor HTML widgets are parsed automatically
+add_filter( 'elementor/widget/render_content', function( $content, $widget ) {
+    if ( 'html' === $widget->get_name() && strpos( $content, '[' ) !== false ) {
+        $content = do_shortcode( $content );
+    }
+    return $content;
+}, 10, 2 );
+
 
 
