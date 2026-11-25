@@ -33,14 +33,14 @@ function safwan_child_enqueue_styles() {
     );
     
     // Enqueue Child Theme Style with cache-busting version
-    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.6.6' );
+    wp_enqueue_style( 'astra-child-theme-css', get_stylesheet_directory_uri() . '/style.css', array('astra-parent-theme-css'), '1.6.7' );
 
     // Enqueue AJAX Mini-Cart Controller Script
     wp_enqueue_script(
         'safwan-cart-js',
         get_stylesheet_directory_uri() . '/js/safwan-cart.js',
         array( 'jquery' ),
-        '1.6.4',
+        '1.6.7',
         true
     );
     wp_localize_script(
