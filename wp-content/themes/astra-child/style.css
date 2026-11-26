@@ -3535,7 +3535,8 @@ img, svg, video, iframe {
     margin-right: 2px !important;
 }
 
-/* Modern Add to Cart Button */
+/* Modern Order / Action Button */
+.sp-order-btn,
 .sp-add-to-cart-btn {
     all: unset !important;
     background: linear-gradient(135deg, #166534 0%, #14532d 100%) !important;
@@ -3557,6 +3558,7 @@ img, svg, video, iframe {
     width: 100% !important;
 }
 
+.sp-order-btn.loading,
 .sp-add-to-cart-btn.loading {
     opacity: 0.75 !important;
     pointer-events: none !important;
@@ -3566,6 +3568,7 @@ img, svg, video, iframe {
     background: linear-gradient(135deg, #15803d 0%, #166534 100%) !important;
 }
 
+.sp-order-btn:hover,
 .sp-add-to-cart-btn:hover {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
     color: #ffffff !important;
@@ -3861,6 +3864,7 @@ img, svg, video, iframe {
         font-size: 11.5px !important;
     }
 
+    .sp-order-btn,
     .sp-add-to-cart-btn {
         padding: 8px 10px !important;
         font-size: 12px !important;
@@ -3889,6 +3893,7 @@ img, svg, video, iframe {
     .sp-product-title {
         font-size: 12.5px !important;
     }
+    .sp-order-btn .sp-btn-text,
     .sp-add-to-cart-btn .sp-btn-text {
         font-size: 11px !important;
     }
