@@ -2594,12 +2594,18 @@ img, svg, video, iframe {
     body:not(.elementor-editor-active) .safwan-tablet-header-wrapper,
     body:not(.elementor-editor-active) .safwan-mobile-header-wrapper,
     body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper,
-    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper {
+    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-tablet-wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-mobile-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_tablet_wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_mobile_wrapper {
         display: none !important;
     }
 
     body:not(.elementor-editor-active) .safwan-desktop-header-wrapper,
-    body:not(.elementor-editor-active) .elementor-element-sng_desktop_header_wrapper {
+    body:not(.elementor-editor-active) .elementor-element-sng_desktop_header_wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-desktop-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_desktop_wrapper {
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
@@ -2612,12 +2618,18 @@ img, svg, video, iframe {
     body:not(.elementor-editor-active) .safwan-desktop-header-wrapper,
     body:not(.elementor-editor-active) .safwan-mobile-header-wrapper,
     body:not(.elementor-editor-active) .elementor-element-sng_desktop_header_wrapper,
-    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper {
+    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-desktop-wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-mobile-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_desktop_wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_mobile_wrapper {
         display: none !important;
     }
 
     body:not(.elementor-editor-active) .safwan-tablet-header-wrapper,
-    body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper {
+    body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-tablet-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_tablet_wrapper {
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
@@ -2630,12 +2642,18 @@ img, svg, video, iframe {
     body:not(.elementor-editor-active) .safwan-desktop-header-wrapper,
     body:not(.elementor-editor-active) .safwan-tablet-header-wrapper,
     body:not(.elementor-editor-active) .elementor-element-sng_desktop_header_wrapper,
-    body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper {
+    body:not(.elementor-editor-active) .elementor-element-sng_tablet_header_wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-desktop-wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-tablet-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_desktop_wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_tablet_wrapper {
         display: none !important;
     }
 
     body:not(.elementor-editor-active) .safwan-mobile-header-wrapper,
-    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper {
+    body:not(.elementor-editor-active) .elementor-element-sng_mobile_header_wrapper,
+    body:not(.elementor-editor-active) .safwan-shop-mobile-wrapper,
+    body:not(.elementor-editor-active) .elementor-element-sng_shop_mobile_wrapper {
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
@@ -3344,6 +3362,9 @@ img, svg, video, iframe {
     width: 100% !important;
 }
 
+.sp-desktop-cols-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+}
 .sp-desktop-cols-3 {
     grid-template-columns: repeat(3, 1fr) !important;
 }
@@ -3602,6 +3623,11 @@ img, svg, video, iframe {
     padding-top: 10px !important;
 }
 
+.safwan-load-more-wrap.is-hidden,
+.sp-load-more-btn.is-hidden {
+    display: none !important;
+}
+
 .sp-load-more-btn {
     background: #ffffff !important;
     border: 2px solid #166534 !important;
@@ -3702,6 +3728,7 @@ img, svg, video, iframe {
 
 /* Desktop only: hide mobile filter button */
 @media (min-width: 1025px) {
+    .tt-mobile-filter-trigger,
     #tt-mobile-filter-btn,
     .tt-sidebar-header,
     .tt-apply-mobile-btn,
@@ -3710,23 +3737,10 @@ img, svg, video, iframe {
     }
 }
 
-/* Tablet & Mobile (<= 1024px) */
+/* Tablet & Mobile Shared Filter Drawer & Trigger (<= 1024px) */
 @media (max-width: 1024px) {
-    /* Elementor container layout fix */
-    .elementor-element-d697931 {
-        flex-direction: column !important;
-        width: 100% !important;
-    }
-    .elementor-element-d2b6310 {
-        width: 100% !important;
-        flex: 1 1 100% !important;
-    }
-    .elementor-element-c18ad90 {
-        width: 100% !important;
-        flex: 1 1 100% !important;
-    }
-
-    /* Mobile Filter Button */
+    /* Mobile & Tablet Filter Button */
+    .tt-mobile-filter-trigger,
     #tt-mobile-filter-btn {
         width: 100% !important;
         background: #166534 !important;
@@ -3746,6 +3760,7 @@ img, svg, video, iframe {
         box-shadow: 0 4px 14px rgba(22, 101, 52, 0.2) !important;
         transition: all 0.2s ease !important;
     }
+    .tt-mobile-filter-trigger:hover,
     #tt-mobile-filter-btn:hover {
         background: #14532d !important;
     }
@@ -3759,8 +3774,8 @@ img, svg, video, iframe {
         font-weight: 800 !important;
     }
 
-    /* Sidebar transforms into Slide-in Drawer */
-    .tt-sidebar {
+    /* Sidebar transforms into Slide-in Drawer on Live Frontend */
+    body:not(.elementor-editor-active) .tt-sidebar {
         position: fixed !important;
         left: -100% !important;
         top: 0 !important;
@@ -3775,8 +3790,15 @@ img, svg, video, iframe {
         padding: 24px 20px !important;
     }
 
-    .tt-sidebar.open {
+    body:not(.elementor-editor-active) .tt-sidebar.open {
         left: 0 !important;
+    }
+
+    body.elementor-editor-active .tt-sidebar {
+        position: static !important;
+        left: auto !important;
+        height: auto !important;
+        width: 100% !important;
     }
 
     .tt-sidebar-header {
@@ -3796,19 +3818,68 @@ img, svg, video, iframe {
         cursor: pointer !important;
         box-shadow: 0 4px 12px rgba(22, 101, 52, 0.2) !important;
     }
+}
 
-    /* Tablet Grid (3 columns on tablet) */
-    .sp-desktop-cols-4,
-    .sp-desktop-cols-3 {
+/* Tablet Devices ONLY (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Let Elementor control exact Tablet container padding without Astra double-inset */
+    body.elementor-page-373 .ast-container,
+    .post-type-archive-product.elementor-page-373 .ast-container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .elementor-element-sng_shop_tablet_wrapper .safwan-shop-banner,
+    .safwan-shop-tablet-wrapper .safwan-shop-banner {
+        padding: 20px 24px !important;
+        margin-bottom: 0 !important;
+        border-radius: 16px !important;
+    }
+    .elementor-element-sng_shop_tablet_wrapper .safwan-banner-title,
+    .safwan-shop-tablet-wrapper .safwan-banner-title {
+        font-size: 23px !important;
+        margin: 0 0 6px 0 !important;
+    }
+    .elementor-element-sng_shop_tablet_wrapper .safwan-banner-sub,
+    .safwan-shop-tablet-wrapper .safwan-banner-sub {
+        font-size: 13.5px !important;
+    }
+
+    .elementor-element-sng_shop_tablet_wrapper .tt-mobile-filter-trigger,
+    .safwan-shop-tablet-wrapper .tt-mobile-filter-trigger {
+        margin-bottom: 0 !important;
+    }
+
+    .elementor-element-sng_shop_tablet_wrapper .sp-custom-product-grid,
+    .safwan-shop-tablet-wrapper .sp-custom-product-grid {
+        gap: 18px !important;
+    }
+
+    .elementor-element-sng_shop_tablet_wrapper .sp-desktop-cols-2 .sp-card-media,
+    .safwan-shop-tablet-wrapper .sp-desktop-cols-2 .sp-card-media {
+        aspect-ratio: auto !important;
+        height: 220px !important;
+    }
+
+    .elementor-element-sng_shop_tablet_wrapper .sp-product-card,
+    .safwan-shop-tablet-wrapper .sp-product-card {
+        padding: 14px !important;
+        border-radius: 14px !important;
+    }
+}
+
+/* Wide Tablet Landscape ONLY (960px - 1024px): 3 balanced columns instead of stretched 2 cols */
+@media (min-width: 960px) and (max-width: 1024px) {
+    .elementor-element-sng_shop_tablet_wrapper .sp-custom-product-grid,
+    .safwan-shop-tablet-wrapper .sp-custom-product-grid {
         grid-template-columns: repeat(3, 1fr) !important;
-        gap: 16px !important;
+        gap: 18px !important;
     }
 
-    .safwan-shop-banner {
-        padding: 20px !important;
-    }
-    .safwan-banner-title {
-        font-size: 22px !important;
+    .elementor-element-sng_shop_tablet_wrapper .sp-desktop-cols-2 .sp-card-media,
+    .safwan-shop-tablet-wrapper .sp-desktop-cols-2 .sp-card-media {
+        height: 195px !important;
     }
 }
 
